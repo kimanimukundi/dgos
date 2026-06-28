@@ -9,11 +9,16 @@ const app = express();
 
 app.use(cors({
   origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
     const allowed = [
       'http://localhost:3000',
       process.env.CLIENT_URL,
     ].filter(Boolean);
-    if (!origin || allowed.some(o => origin.startsWith(o)) || origin.includes('.onrender.com')) {
+    if (
+      allowed.some(o => origin.startsWith(o)) ||
+      origin.includes('.onrender.com') ||
+      origin.includes('.vercel.app')
+    ) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
