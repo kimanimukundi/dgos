@@ -53,7 +53,7 @@ async function autoInitDb() {
   });
   try {
     const { rows } = await pool.query("SELECT to_regclass('public.staff') as exists");
-    if (rows[0].exists) { console.log('DB already initialized'); await pool.end(); return; }
+    if (rows[0].exists) { console.log('DB already initialized'); return; }
     console.log('Initializing database...');
     const sqlFiles = [
       'db/schema.sql', 'db/seed.sql',
